@@ -33,6 +33,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.SerialReader = new System.IO.Ports.SerialPort(this.components);
             this.Timer_ms = new System.Windows.Forms.Timer(this.components);
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.SuspendLayout();
             // 
             // WaveformGraph
@@ -69,6 +70,11 @@
             this.Timer_ms.Interval = 10;
             this.Timer_ms.Tick += new System.EventHandler(this.Timer_ms_Tick);
             // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.FileName = "EKGData";
+            this.saveFileDialog1.Filter = "csv files|*.csv";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -90,6 +96,7 @@
         private System.Windows.Forms.Button button1;
         private System.IO.Ports.SerialPort SerialReader;
         private System.Windows.Forms.Timer Timer_ms;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 
