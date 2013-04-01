@@ -14,26 +14,59 @@ namespace EKGCapture
 {
     public partial class Form1 : Form
     {
+        GraphPane MyPane;
+        PointPairList list1 = new PointPairList();
+        double Time_s = 0;
+
         public Form1()
         {
             InitializeComponent();
-            CreateGraph();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
-        }
-
-        private void CreateGraph()
-        {
-            GraphPane MyPane = WaveformGraph.GraphPane;
+            MyPane = WaveformGraph.GraphPane;
 
             MyPane.XAxis.Title.Text = "";
-
+            MyPane.YAxis.Scale.Max = 5;
+            MyPane.YAxis.Scale.Min = 0;
             MyPane.YAxis.Title.Text = "";
             MyPane.Title.Text = "";
+            LineItem myCurve = MyPane.AddCurve("", list1, Color.Red, SymbolType.None);
             WaveformGraph.AxisChange();
+            SerialReader.Open();
+            Timer_ms.Start();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            list1.Clear();
+            Time_s = 0;
+        }
+
+        private void Timer_ms_Tick(object sender, EventArgs e)
+        {
+            Time_s = Time_s + .01;
+        }
+
+        private void SerialReader_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        {
+            double y;
+            if (double.TryParse(SerialReader.ReadLine(),out y) == true)
+            {
+                list1.Add(Time_s, y/204);
+                MyPane.XAxis.Scale.Max = Time_s + 1;
+                MyPane.XAxis.Scale.Min = Time_s - 1;
+                WaveformGraph.Invalidate();
+                WaveformGraph.AxisChange();
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SerialReader.Close();
+            SerialReader.Dispose();
+            Timer_ms.Stop();
         }
     }
 }
