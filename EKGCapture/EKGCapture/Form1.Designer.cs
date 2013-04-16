@@ -62,12 +62,13 @@
             // 
             // SerialReader
             // 
-            this.SerialReader.PortName = "COM3";
+            this.SerialReader.BaudRate = 115200;
+            this.SerialReader.PortName = "COM4";
             this.SerialReader.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.SerialReader_DataReceived);
             // 
             // Timer_ms
             // 
-            this.Timer_ms.Interval = 10;
+            this.Timer_ms.Interval = 1;
             this.Timer_ms.Tick += new System.EventHandler(this.Timer_ms_Tick);
             // 
             // saveFileDialog1

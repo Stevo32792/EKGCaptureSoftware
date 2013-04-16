@@ -19,7 +19,7 @@ namespace EKGCapture
         PointPairList list1 = new PointPairList();
         StreamWriter writer;
         double Time_s = 0;
-        double pastx;
+        double y;
 
         public Form1()
         {
@@ -51,25 +51,23 @@ namespace EKGCapture
 
         private void Timer_ms_Tick(object sender, EventArgs e)
         {
-            Time_s = Time_s + .01;
+            Time_s = Time_s + .025;
+            MyPane.XAxis.Scale.Max = Time_s + 1;
+            MyPane.XAxis.Scale.Min = Time_s - 1;
+            WaveformGraph.Invalidate();
+            WaveformGraph.AxisChange();
+            writer.WriteLine(Time_s + "," + y / 204);
+            if (list1.Count > 5000)
+            {
+                list1.RemoveAt(0);
+            }
         }
 
         private void SerialReader_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
-            double y;
-            if (double.TryParse(SerialReader.ReadLine(),out y) == true)
+            if (double.TryParse(SerialReader.ReadLine(), out y))
             {
                 list1.Add(Time_s, y/204);
-                writer.WriteLine(Time_s + "," + y / 204);
-                pastx = y / 204;
-                if (list1.Count > 500)
-                {
-                    list1.RemoveAt(0);
-                }
-                MyPane.XAxis.Scale.Max = Time_s + 1;
-                MyPane.XAxis.Scale.Min = Time_s - 1;
-                WaveformGraph.Invalidate();
-                WaveformGraph.AxisChange();
             }
         }
 
