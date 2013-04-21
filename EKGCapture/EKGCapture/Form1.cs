@@ -53,8 +53,6 @@ namespace EKGCapture
         private void Timer_ms_Tick(object sender, EventArgs e)
         {
             Time_s = Time_s + .025;
-            MyPane.XAxis.Scale.Max = Time_s + 1;
-            MyPane.XAxis.Scale.Min = Time_s - 1;
             WaveformGraph.Invalidate();
             WaveformGraph.AxisChange();
             if (list1.Count > 5000)
@@ -71,6 +69,8 @@ namespace EKGCapture
                 {
                     list1.Add(Time_s, y / 204);
                 }
+                MyPane.XAxis.Scale.Max = Time_s + 1;
+                MyPane.XAxis.Scale.Min = Time_s - 1;
             }
             else
             {
@@ -80,6 +80,7 @@ namespace EKGCapture
                 }
                 SerialReader.Close();
                 ChangePortFlag = false;
+                ChangeCommPort();
             }
         }
 
@@ -127,6 +128,7 @@ namespace EKGCapture
         {
             Timer_ms.Stop();
             list1.Clear();
+            Time_s = 0;
             SerialReader.PortName = activePort;
             SerialReader.Open();
             Timer_ms.Start();
