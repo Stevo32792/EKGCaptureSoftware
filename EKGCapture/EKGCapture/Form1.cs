@@ -54,7 +54,7 @@ namespace EKGCapture
 
         private void Timer_ms_Tick(object sender, EventArgs e)
         {
-            Time_s = Time_s + .025;
+            Time_s = Time_s + .015;
             WaveformGraph.Invalidate();
             WaveformGraph.AxisChange();
             if (list1.Count > 10)
