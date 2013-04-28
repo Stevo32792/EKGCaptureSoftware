@@ -27,6 +27,7 @@ namespace EKGCapture
         bool write = false;
         bool ChangingCOM;
         bool ChangePortFlag;
+        bool locationSelected = false;
 
         public Form1()
         {
@@ -179,11 +180,26 @@ namespace EKGCapture
             catch
             {
                 MessageBox.Show("Invalid Location");
+                return;
             }
         }
 
         private void enableDataLoggingToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (locationSelected == false)
+            {
+                try
+                {
+                    saveFileDialog1.ShowDialog();
+                    writer = new StreamWriter(saveFileDialog1.FileName);
+                    locationSelected = true;
+                }
+                catch
+                {
+                    MessageBox.Show("Invalid Location");
+                    return;
+                }
+            }
             if (enableDataLoggingToolStripMenuItem.Checked == false)
             {
                 enableDataLoggingToolStripMenuItem.Checked = true;
