@@ -11,6 +11,7 @@ using ZedGraph;
 using ZedGraph.Web;
 using System.IO;
 using System.IO.Ports;
+using System.Collections;
 
 namespace EKGCapture
 {
@@ -18,16 +19,19 @@ namespace EKGCapture
     {
         GraphPane MyPane;
         PointPairList list1 = new PointPairList();
+        aboutForm aboutform = new aboutForm();
         StreamWriter writer;
         ToolStripMenuItem lastClickedItem;
         double Time_s = 0;
         double y;
+        double x;
         string[] ports;
         string activePort;
         bool write = false;
         bool ChangingCOM;
         bool ChangePortFlag;
         bool locationSelected = false;
+        double elapsedSeconds = -1;
 
         public Form1()
         {
@@ -59,7 +63,7 @@ namespace EKGCapture
             Time_s = Time_s + .015;
             WaveformGraph.Invalidate();
             WaveformGraph.AxisChange();
-            if (list1.Count > 10)
+            while (list1.Count > 550)
             {
                 list1.RemoveAt(0);
             }
@@ -67,27 +71,50 @@ namespace EKGCapture
 
         private void SerialReader_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
+            string[] readdata = SerialReader.ReadLine().Split(',');
             if (ChangePortFlag == false)
             {
-                if (double.TryParse(SerialReader.ReadLine(), out y))
+                if (readdata.Count() == 2)
                 {
-                    list1.Add(Time_s, y / 204);
-                    if (write == true)
+                    if (double.TryParse(readdata[0], out y) == true)
                     {
-                        writer.WriteLine(Time_s + "," + y / 204);
+                        if (double.TryParse(readdata[1], out x) == true)
+                        {
+                            if (x == 0)
+                            { 
+                                elapsedSeconds++; 
+                            }
+                            list1.Add(x / 1000 + elapsedSeconds, y / 204);
+                            if (write == true)
+                            {
+                                writer.WriteLine(x / 1000 + elapsedSeconds + "," + y / 204);
+                            }
+                            MyPane.XAxis.Scale.Max = x / 1000 + elapsedSeconds + 5;
+                            MyPane.XAxis.Scale.Min = x / 1000 + elapsedSeconds - 5;
+                        }
                     }
                 }
-                MyPane.XAxis.Scale.Max = Time_s + 1;
-                MyPane.XAxis.Scale.Min = Time_s - 1;
             }
             else
             {
-                if (double.TryParse(SerialReader.ReadLine(), out y))
+                if (readdata.Count() == 2)
                 {
-                    list1.Add(Time_s, y / 204);
-                    if (write == true)
+                    if (double.TryParse(readdata[0], out y) == true)
                     {
-                        writer.WriteLine(Time_s + "," + y / 204);
+                        if (double.TryParse(readdata[1], out x) == true)
+                        {
+                            if (x == 0)
+                            {
+                                elapsedSeconds++;
+                            }
+                            list1.Add(x / 1000 + elapsedSeconds, y / 204);
+                            if (write == true)
+                            {
+                                writer.WriteLine(x / 1000 + elapsedSeconds + "," + y / 204);
+                            }
+                            MyPane.XAxis.Scale.Max = x / 1000 + elapsedSeconds + 5;
+                            MyPane.XAxis.Scale.Min = x / 1000 + elapsedSeconds - 5;
+                        }
                     }
                 }
                 SerialReader.Close();
@@ -161,8 +188,9 @@ namespace EKGCapture
             Timer_ms.Stop();
             list1.Clear();
             Time_s = 0;
-            MyPane.XAxis.Scale.Max = Time_s + 1;
-            MyPane.XAxis.Scale.Min = Time_s - 1;
+            elapsedSeconds = 0;
+            MyPane.XAxis.Scale.Max = Time_s + 5;
+            MyPane.XAxis.Scale.Min = Time_s - 5;
             WaveformGraph.Invalidate();
             WaveformGraph.AxisChange();
             SerialReader.PortName = activePort;
@@ -176,6 +204,7 @@ namespace EKGCapture
             {
                 saveFileDialog1.ShowDialog();
                 writer = new StreamWriter(saveFileDialog1.FileName);
+                locationSelected = true;
             }
             catch
             {
@@ -245,8 +274,9 @@ namespace EKGCapture
             list1.Clear();
             Timer_ms.Stop();
             Time_s = 0;
-            MyPane.XAxis.Scale.Max = Time_s + 1;
-            MyPane.XAxis.Scale.Min = Time_s - 1;
+            elapsedSeconds = 0;
+            MyPane.XAxis.Scale.Max = Time_s + 5;
+            MyPane.XAxis.Scale.Min = Time_s - 5;
             WaveformGraph.Invalidate();
             WaveformGraph.AxisChange();
             if (lastClickedItem == null) { }
@@ -269,8 +299,9 @@ namespace EKGCapture
             list1.Clear();
             Timer_ms.Stop();
             Time_s = 0;
-            MyPane.XAxis.Scale.Max = Time_s + 1;
-            MyPane.XAxis.Scale.Min = Time_s - 1;
+            elapsedSeconds = 0;
+            MyPane.XAxis.Scale.Max = Time_s + 5;
+            MyPane.XAxis.Scale.Min = Time_s - 5;
             WaveformGraph.Invalidate();
             WaveformGraph.AxisChange();
             if (lastClickedItem == null) { }
@@ -280,6 +311,11 @@ namespace EKGCapture
             }
             lastClickedItem = null;
             activePort = null;
+        }
+
+        private void aBoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            aboutform.Show();
         }
     }
 }

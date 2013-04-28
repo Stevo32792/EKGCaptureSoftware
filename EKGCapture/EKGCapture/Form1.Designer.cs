@@ -36,12 +36,14 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setDataDestinationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableDataLoggingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cOMPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshCOMPortsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disableCOMPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cOMPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aBoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,7 +80,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.optionsToolStripMenuItem});
+            this.optionsToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(890, 24);
@@ -101,6 +104,13 @@
             this.setDataDestinationToolStripMenuItem.Text = "Set Data Destination";
             this.setDataDestinationToolStripMenuItem.Click += new System.EventHandler(this.setDataDestinationToolStripMenuItem_Click);
             // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -119,19 +129,6 @@
             this.enableDataLoggingToolStripMenuItem.Text = "Enable Data Logging";
             this.enableDataLoggingToolStripMenuItem.Click += new System.EventHandler(this.enableDataLoggingToolStripMenuItem_Click);
             // 
-            // cOMPortToolStripMenuItem
-            // 
-            this.cOMPortToolStripMenuItem.Name = "cOMPortToolStripMenuItem";
-            this.cOMPortToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.cOMPortToolStripMenuItem.Text = "COM Port";
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
             // refreshCOMPortsToolStripMenuItem
             // 
             this.refreshCOMPortsToolStripMenuItem.Name = "refreshCOMPortsToolStripMenuItem";
@@ -146,6 +143,27 @@
             this.disableCOMPortToolStripMenuItem.Text = "Disable COM Port";
             this.disableCOMPortToolStripMenuItem.Click += new System.EventHandler(this.disableCOMPortToolStripMenuItem_Click);
             // 
+            // cOMPortToolStripMenuItem
+            // 
+            this.cOMPortToolStripMenuItem.Name = "cOMPortToolStripMenuItem";
+            this.cOMPortToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.cOMPortToolStripMenuItem.Text = "COM Port";
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aBoutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // aBoutToolStripMenuItem
+            // 
+            this.aBoutToolStripMenuItem.Name = "aBoutToolStripMenuItem";
+            this.aBoutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aBoutToolStripMenuItem.Text = "About";
+            this.aBoutToolStripMenuItem.Click += new System.EventHandler(this.aBoutToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -155,7 +173,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Wireless EKG Front Interface";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
@@ -180,6 +198,8 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem refreshCOMPortsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem disableCOMPortToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aBoutToolStripMenuItem;
     }
 }
 
