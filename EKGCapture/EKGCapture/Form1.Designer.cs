@@ -58,7 +58,6 @@
             // 
             // SerialReader
             // 
-            this.SerialReader.BaudRate = 115200;
             this.SerialReader.PortName = "COM5";
             this.SerialReader.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.SerialReader_DataReceived);
             // 
@@ -112,6 +111,7 @@
             this.enableDataLoggingToolStripMenuItem.Name = "enableDataLoggingToolStripMenuItem";
             this.enableDataLoggingToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.enableDataLoggingToolStripMenuItem.Text = "Enable Data Logging";
+            this.enableDataLoggingToolStripMenuItem.Click += new System.EventHandler(this.enableDataLoggingToolStripMenuItem_Click);
             // 
             // cOMPortToolStripMenuItem
             // 

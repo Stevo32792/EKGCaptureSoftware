@@ -23,6 +23,7 @@ namespace EKGCapture
         double y;
         string[] ports;
         string activePort;
+        bool write = false;
 
         bool ChangePortFlag;
 
@@ -42,6 +43,7 @@ namespace EKGCapture
             MyPane.Title.Text = "";
             LineItem myCurve = MyPane.AddCurve("", list1, Color.Red, SymbolType.None);
             WaveformGraph.AxisChange();
+            writer = new StreamWriter(saveFileDialog1.FileName);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -55,7 +57,7 @@ namespace EKGCapture
             Time_s = Time_s + .025;
             WaveformGraph.Invalidate();
             WaveformGraph.AxisChange();
-            if (list1.Count > 5000)
+            if (list1.Count > 10)
             {
                 list1.RemoveAt(0);
             }
@@ -68,6 +70,10 @@ namespace EKGCapture
                 if (double.TryParse(SerialReader.ReadLine(), out y))
                 {
                     list1.Add(Time_s, y / 204);
+                    if (write == true)
+                    {
+                        writer.WriteLine(Time_s + "," + y / 204);
+                    }
                 }
                 MyPane.XAxis.Scale.Max = Time_s + 1;
                 MyPane.XAxis.Scale.Min = Time_s - 1;
@@ -77,6 +83,10 @@ namespace EKGCapture
                 if (double.TryParse(SerialReader.ReadLine(), out y))
                 {
                     list1.Add(Time_s, y / 204);
+                    if (write == true)
+                    {
+                        writer.WriteLine(Time_s + "," + y / 204);
+                    }
                 }
                 SerialReader.Close();
                 ChangePortFlag = false;
@@ -136,8 +146,37 @@ namespace EKGCapture
 
         private void setDataDestinationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            saveFileDialog1.ShowDialog();
-            writer = new StreamWriter(saveFileDialog1.FileName);
+            try
+            {
+                saveFileDialog1.ShowDialog();
+                writer = new StreamWriter(saveFileDialog1.FileName);
+            }
+            catch
+            {
+                MessageBox.Show("Invalid Location");
+            }
+        }
+
+        private void enableDataLoggingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (enableDataLoggingToolStripMenuItem.Checked == false)
+            {
+                enableDataLoggingToolStripMenuItem.Checked = true;
+                if (saveFileDialog1.FileName == null)
+                {
+                    MessageBox.Show("Set a destination for the log file");
+                    enableDataLoggingToolStripMenuItem.Checked = false;
+                }
+                else
+                {
+                    write = true;
+                }
+            }
+            else
+            {
+                enableDataLoggingToolStripMenuItem.Checked = false;
+                write = false;
+            }
         }
     }
 }
