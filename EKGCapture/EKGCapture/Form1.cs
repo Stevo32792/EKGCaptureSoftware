@@ -96,9 +96,12 @@ namespace EKGCapture
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SerialReader.Close();
+            ChangePortFlag = true;
+            while (ChangePortFlag == true) { };
             SerialReader.Dispose();
-            Timer_ms.Stop();
+            this.Dispose();
+            this.Close();
+            Application.Exit();
         }
 
         private void AddCommPorts()
@@ -177,6 +180,16 @@ namespace EKGCapture
                 enableDataLoggingToolStripMenuItem.Checked = false;
                 write = false;
             }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ChangePortFlag = true;
+            while (ChangePortFlag == true) { };
+            SerialReader.Dispose();
+            this.Dispose();
+            this.Close();
+            Application.Exit();
         }
     }
 }
