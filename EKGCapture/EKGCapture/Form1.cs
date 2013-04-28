@@ -19,12 +19,13 @@ namespace EKGCapture
         GraphPane MyPane;
         PointPairList list1 = new PointPairList();
         StreamWriter writer;
+        ToolStripMenuItem lastClickedItem;
         double Time_s = 0;
         double y;
         string[] ports;
         string activePort;
         bool write = false;
-
+        bool ChangingCOM;
         bool ChangePortFlag;
 
         public Form1()
@@ -90,14 +91,20 @@ namespace EKGCapture
                 }
                 SerialReader.Close();
                 ChangePortFlag = false;
-                ChangeCommPort();
+                if (ChangingCOM == true)
+                {
+                    ChangeCommPort();
+                }
             }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ChangePortFlag = true;
-            while (ChangePortFlag == true) { };
+            if (SerialReader.IsOpen == true)
+            {
+                ChangePortFlag = true;
+                while (ChangePortFlag == true) { };
+            }
             SerialReader.Dispose();
             this.Dispose();
             this.Close();
@@ -106,6 +113,7 @@ namespace EKGCapture
 
         private void AddCommPorts()
         {
+            cOMPortToolStripMenuItem.DropDownItems.Clear();
             ports = SerialPort.GetPortNames();
             ToolStripMenuItem[] items = new ToolStripMenuItem[ports.Length];
             for (int i = 0; i < items.Length; i++)
@@ -125,15 +133,25 @@ namespace EKGCapture
             {
                 ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
                 activePort = clickedItem.Text;
+                clickedItem.Checked = true;
                 SerialReader.PortName = activePort;
                 SerialReader.Open();
                 Timer_ms.Start();
+                lastClickedItem = clickedItem;
             }
             else
             {
                 ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
-                activePort = clickedItem.Text;
-                ChangePortFlag = true;
+                if (clickedItem.Checked == true) { }
+                else
+                {
+                    activePort = clickedItem.Text;
+                    clickedItem.Checked = true;
+                    lastClickedItem.Checked = false;
+                    ChangePortFlag = true;
+                    ChangingCOM = true;
+                }
+                lastClickedItem = clickedItem;
             }
         }
 
@@ -142,6 +160,10 @@ namespace EKGCapture
             Timer_ms.Stop();
             list1.Clear();
             Time_s = 0;
+            MyPane.XAxis.Scale.Max = Time_s + 1;
+            MyPane.XAxis.Scale.Min = Time_s - 1;
+            WaveformGraph.Invalidate();
+            WaveformGraph.AxisChange();
             SerialReader.PortName = activePort;
             SerialReader.Open();
             Timer_ms.Start();
@@ -184,12 +206,64 @@ namespace EKGCapture
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ChangePortFlag = true;
-            while (ChangePortFlag == true) { };
+            if (SerialReader.IsOpen == true)
+            {
+                ChangePortFlag = true;
+                while (ChangePortFlag == true) { };
+            }
             SerialReader.Dispose();
             this.Dispose();
             this.Close();
             Application.Exit();
+        }
+
+        private void refreshCOMPortsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddCommPorts();
+            if (SerialReader.IsOpen == true)
+            {
+                ChangePortFlag = true;
+                while (ChangePortFlag == true) { };
+            }
+            SerialReader.Close();
+            list1.Clear();
+            Timer_ms.Stop();
+            Time_s = 0;
+            MyPane.XAxis.Scale.Max = Time_s + 1;
+            MyPane.XAxis.Scale.Min = Time_s - 1;
+            WaveformGraph.Invalidate();
+            WaveformGraph.AxisChange();
+            if (lastClickedItem == null) { }
+            else
+            {
+                lastClickedItem.Checked = false;
+            }
+            lastClickedItem = null;
+            activePort = null;
+        }
+
+        private void disableCOMPortToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (SerialReader.IsOpen == true)
+            {
+                ChangePortFlag = true;
+                while (ChangePortFlag == true) { };
+            }
+            SerialReader.Close();
+            list1.Clear();
+            Timer_ms.Stop();
+            Time_s = 0;
+            MyPane.XAxis.Scale.Max = Time_s + 1;
+            MyPane.XAxis.Scale.Min = Time_s - 1;
+            WaveformGraph.Invalidate();
+            WaveformGraph.AxisChange();
+            if (lastClickedItem == null) { }
+            else
+            {
+                lastClickedItem.Checked = false;
+            }
+            lastClickedItem = null;
+            activePort = null;
         }
     }
 }

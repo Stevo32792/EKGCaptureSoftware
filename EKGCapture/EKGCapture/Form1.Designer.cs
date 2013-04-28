@@ -40,6 +40,8 @@
             this.enableDataLoggingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cOMPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshCOMPortsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.disableCOMPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -103,6 +105,8 @@
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.enableDataLoggingToolStripMenuItem,
+            this.refreshCOMPortsToolStripMenuItem,
+            this.disableCOMPortToolStripMenuItem,
             this.cOMPortToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -127,6 +131,20 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // refreshCOMPortsToolStripMenuItem
+            // 
+            this.refreshCOMPortsToolStripMenuItem.Name = "refreshCOMPortsToolStripMenuItem";
+            this.refreshCOMPortsToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.refreshCOMPortsToolStripMenuItem.Text = "Refresh COM Ports";
+            this.refreshCOMPortsToolStripMenuItem.Click += new System.EventHandler(this.refreshCOMPortsToolStripMenuItem_Click);
+            // 
+            // disableCOMPortToolStripMenuItem
+            // 
+            this.disableCOMPortToolStripMenuItem.Name = "disableCOMPortToolStripMenuItem";
+            this.disableCOMPortToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.disableCOMPortToolStripMenuItem.Text = "Disable COM Port";
+            this.disableCOMPortToolStripMenuItem.Click += new System.EventHandler(this.disableCOMPortToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -160,6 +178,8 @@
         private System.Windows.Forms.ToolStripMenuItem enableDataLoggingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cOMPortToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refreshCOMPortsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem disableCOMPortToolStripMenuItem;
     }
 }
 
