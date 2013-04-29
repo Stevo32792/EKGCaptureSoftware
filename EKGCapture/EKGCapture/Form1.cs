@@ -22,6 +22,7 @@ namespace EKGCapture
         aboutForm aboutform = new aboutForm();
         StreamWriter writer;
         ToolStripMenuItem lastClickedItem;
+        ToolStripMenuItem baudrate;
         double Time_s = 0;
         double y;
         double x;
@@ -47,6 +48,9 @@ namespace EKGCapture
             MyPane.YAxis.Scale.Min = 0;
             MyPane.YAxis.Title.Text = "";
             MyPane.Title.Text = "";
+            baudrate = toolStripMenuItem8;
+            baudrate.Checked = true;
+            SerialReader.BaudRate = int.Parse(baudrate.Text);
             LineItem myCurve = MyPane.AddCurve("", list1, Color.Red, SymbolType.None);
             WaveformGraph.AxisChange();
             writer = new StreamWriter(saveFileDialog1.FileName);
@@ -316,6 +320,62 @@ namespace EKGCapture
         private void aBoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aboutform.Show();
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            SerialReader.BaudRate = 9600;
+            baudrate.Checked = false;
+            baudrate = toolStripMenuItem2;
+            baudrate.Checked = true;
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            SerialReader.BaudRate = 14400;
+            baudrate.Checked = false;
+            baudrate = toolStripMenuItem3;
+            baudrate.Checked = true;
+        }
+
+        private void toolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            SerialReader.BaudRate = 19200;
+            baudrate.Checked = false;
+            baudrate = toolStripMenuItem4;
+            baudrate.Checked = true;
+        }
+
+        private void toolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            SerialReader.BaudRate = 28800;
+            baudrate.Checked = false;
+            baudrate = toolStripMenuItem5;
+            baudrate.Checked = true;
+        }
+
+        private void toolStripMenuItem6_Click(object sender, EventArgs e)
+        {
+            SerialReader.BaudRate = 38400;
+            baudrate.Checked = false;
+            baudrate = toolStripMenuItem6;
+            baudrate.Checked = true;
+        }
+
+        private void toolStripMenuItem7_Click(object sender, EventArgs e)
+        {
+            SerialReader.BaudRate = 57600;
+            baudrate.Checked = false;
+            baudrate = toolStripMenuItem7;
+            baudrate.Checked = true;
+        }
+
+        private void toolStripMenuItem8_Click(object sender, EventArgs e)
+        {
+            SerialReader.BaudRate = 115200;
+            baudrate.Checked = false;
+            baudrate = toolStripMenuItem8;
+            baudrate.Checked = true;
         }
     }
 }
