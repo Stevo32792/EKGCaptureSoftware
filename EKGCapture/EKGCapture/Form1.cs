@@ -29,7 +29,6 @@ namespace EKGCapture
         string[] ports;
         string activePort;
         bool write = false;
-        bool ChangingCOM;
         bool ChangePortFlag;
         bool locationSelected = false;
         double elapsedSeconds = -1;
@@ -123,10 +122,6 @@ namespace EKGCapture
                 }
                 SerialReader.Close();
                 ChangePortFlag = false;
-                if (ChangingCOM == true)
-                {
-                    ChangeCommPort();
-                }
             }
         }
 
@@ -181,7 +176,22 @@ namespace EKGCapture
                     clickedItem.Checked = true;
                     lastClickedItem.Checked = false;
                     ChangePortFlag = true;
-                    ChangingCOM = true;
+                    if (SerialReader.IsOpen == true)
+                    {
+                        ChangePortFlag = true;
+                        while (ChangePortFlag == true) { };
+                    }
+                    SerialReader.Close();
+                    list1.Clear();
+                    Timer_ms.Stop();
+                    Time_s = 0;
+                    elapsedSeconds = 0;
+                    MyPane.XAxis.Scale.Max = Time_s + 5;
+                    MyPane.XAxis.Scale.Min = Time_s - 5;
+                    WaveformGraph.Invalidate();
+                    WaveformGraph.AxisChange();
+                    SerialReader.PortName = activePort;
+                    SerialReader.Open();
                 }
                 lastClickedItem = clickedItem;
             }
