@@ -122,10 +122,9 @@
 Program Written By: Steven Zehner
 Contact: steve@szehner.com
 Information: http://wirelessekg.wordpress.com/
-Version: 1.0
+Version: 1.01
 Last Edited: 4/28/2013
 Changes:
-     - Changed Serial information to carry time in
-     - Various Bug Fixes</value>
+     - Added selectable BAUD rate</value>
   </data>
 </root>

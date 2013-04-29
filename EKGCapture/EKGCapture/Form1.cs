@@ -74,6 +74,7 @@ namespace EKGCapture
 
         private void SerialReader_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
+            SerialTimeout.Enabled = false;
             string[] readdata = SerialReader.ReadLine().Split(',');
             if (ChangePortFlag == false)
             {
@@ -175,13 +176,12 @@ namespace EKGCapture
                     activePort = clickedItem.Text;
                     clickedItem.Checked = true;
                     lastClickedItem.Checked = false;
-                    ChangePortFlag = true;
+                    SerialTimeout.Enabled = true;
                     if (SerialReader.IsOpen == true)
                     {
                         ChangePortFlag = true;
                         while (ChangePortFlag == true) { };
                     }
-                    SerialReader.Close();
                     list1.Clear();
                     Timer_ms.Stop();
                     Time_s = 0;
@@ -195,21 +195,6 @@ namespace EKGCapture
                 }
                 lastClickedItem = clickedItem;
             }
-        }
-
-        private void ChangeCommPort()
-        {
-            Timer_ms.Stop();
-            list1.Clear();
-            Time_s = 0;
-            elapsedSeconds = 0;
-            MyPane.XAxis.Scale.Max = Time_s + 5;
-            MyPane.XAxis.Scale.Min = Time_s - 5;
-            WaveformGraph.Invalidate();
-            WaveformGraph.AxisChange();
-            SerialReader.PortName = activePort;
-            SerialReader.Open();
-            Timer_ms.Start();
         }
 
         private void setDataDestinationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -265,6 +250,7 @@ namespace EKGCapture
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SerialTimeout.Enabled = true;
             if (SerialReader.IsOpen == true)
             {
                 ChangePortFlag = true;
@@ -279,6 +265,7 @@ namespace EKGCapture
         private void refreshCOMPortsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddCommPorts();
+            SerialTimeout.Enabled = true;
             if (SerialReader.IsOpen == true)
             {
                 ChangePortFlag = true;
@@ -304,6 +291,7 @@ namespace EKGCapture
 
         private void disableCOMPortToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SerialTimeout.Enabled = true;
             if (SerialReader.IsOpen == true)
             {
                 ChangePortFlag = true;
@@ -386,6 +374,12 @@ namespace EKGCapture
             baudrate.Checked = false;
             baudrate = toolStripMenuItem8;
             baudrate.Checked = true;
+        }
+
+        private void SerialTimeout_Tick(object sender, EventArgs e)
+        {
+            ChangePortFlag = false;
+            SerialTimeout.Enabled = false;
         }
     }
 }

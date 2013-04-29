@@ -42,8 +42,6 @@
             this.refreshCOMPortsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disableCOMPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cOMPortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aBoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bAUDRateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +50,9 @@
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aBoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SerialTimeout = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -158,21 +159,6 @@
             this.cOMPortToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.cOMPortToolStripMenuItem.Text = "COM Port";
             // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aBoutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // aBoutToolStripMenuItem
-            // 
-            this.aBoutToolStripMenuItem.Name = "aBoutToolStripMenuItem";
-            this.aBoutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.aBoutToolStripMenuItem.Text = "About";
-            this.aBoutToolStripMenuItem.Click += new System.EventHandler(this.aBoutToolStripMenuItem_Click);
-            // 
             // bAUDRateToolStripMenuItem
             // 
             this.bAUDRateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -236,6 +222,26 @@
             this.toolStripMenuItem8.Text = "115200";
             this.toolStripMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
             // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aBoutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // aBoutToolStripMenuItem
+            // 
+            this.aBoutToolStripMenuItem.Name = "aBoutToolStripMenuItem";
+            this.aBoutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aBoutToolStripMenuItem.Text = "About";
+            this.aBoutToolStripMenuItem.Click += new System.EventHandler(this.aBoutToolStripMenuItem_Click);
+            // 
+            // SerialTimeout
+            // 
+            this.SerialTimeout.Interval = 1000;
+            this.SerialTimeout.Tick += new System.EventHandler(this.SerialTimeout_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -280,6 +286,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem8;
+        private System.Windows.Forms.Timer SerialTimeout;
     }
 }
 
